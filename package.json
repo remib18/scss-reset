@@ -1,13 +1,21 @@
 {
   "name": "scss-reset",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "SCSS Reset",
   "main": "",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/andreymatin/scss-reset.git"
   },
-  "author": "Andrey Matin",
+  "authors": [
+    {
+      "name": "Andrey Matin",
+      "url": "https://github.com/andreymatin"
+    }, {
+      "name": "Rémi Bernard",
+      "url": "https://github.com/remib18"
+    }
+  ],
   "browserslist": [
     "> 1%"
   ],
@@ -24,6 +32,10 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "sass --watch --update --style=expanded src/scss:dist",
+    "prod": "sass --no-source-map --style=compressed src/scss:dist"
+  },
+  "devDependencies": {
+    "sass": "^1.51.0"
   }
 }

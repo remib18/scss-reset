@@ -1,28 +1,30 @@
+@use "variables" as v;
+
 /**
  * Typography
  */
 
 html,
 body {
-  font-family: $body-font;
-  font-weight: $body-font-weight;
+  font-family: v.$body-font;
+  font-weight: v.$body-font-weight;
 }
 
 html {
-  font-size: $basic-font-size;
+  font-size: v.$basic-font-size;
 }
 
 body {
-  color: $text-color;
-  font-size: $paragraph;
-  line-height: $line-height;
+  color: v.$text-color;
+  font-size: v.$paragraph;
+  line-height: v.$line-height;
 
 }
 
 h1,
 h2,
 h3 {
-  font-family: $header-font;
+  font-family: v.$header-font;
   font-weight: 600;
 }
 
@@ -32,11 +34,11 @@ button,
 input,
 select,
 textarea {
-  color: $text-color;
+  color: v.$text-color;
 }
 
 a {
-  color: $text-color;
+  color: v.$text-color;
   text-decoration: none;
 
   &:visited {

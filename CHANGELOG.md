@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.3] — 2022-05-12
+
+- Updated scss with modern syntax of `@use` and `@forward` instead of `@import`
+- Global cleanup of duplicatas
+- Setup basic scripts to simplify future updates
+
 ## [1.2.2] - 2021-09-12
 
 - css reset: Removed css duplicates
