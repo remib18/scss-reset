@@ -141,7 +141,7 @@
    */
 
   const copyCSS = () =>
-    src(cfg.dest.cssDist + "*").pipe(dest(cfg.dest.cssTest));
+    src(cfg.dest.cssDist + "main.css").pipe(dest(cfg.dest.cssTest));
 
 
   const minifyResetCSS = () => src('./dist/_reset.css')

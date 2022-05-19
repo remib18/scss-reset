@@ -33,8 +33,7 @@
     "test": "test"
   },
   "scripts": {
-    "dev": "sass --watch --update --style=expanded src/scss:dist",
-    "prod": "sass --no-source-map --style=compressed src/scss:dist"
+    "prod": "gulp"
   },
   "devDependencies": {
     "sass": "^1.51.0",
