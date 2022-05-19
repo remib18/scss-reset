@@ -7,6 +7,8 @@
 - Updating Gulpfile
 - Adding dev dependency to easily maintain project
 - Now everything you want to import is located in the dist folder (appart the shopify part)
+- css reset: fixing menu
+- html: Fixed test file
 
 ## [1.2.2] - 2021-09-12
 
