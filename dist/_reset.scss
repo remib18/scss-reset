@@ -1,41 +1,140 @@
 /**
  * Reset Mixing
  * ================================================== */
+
 /**
  * Disable Animation
  */
+@mixin disableAnimation {
+  transform: none !important;
+
+  transition: none !important;
+  transition-property: none !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+
+  animation: none !important;
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+
+  scroll-behavior: auto !important;
+}
+
 /**
  * Disable animation depends on Browser or Operation System configuration
  */
+@mixin acDisableAnimation {
+  @media (prefers-reduced-motion: reduce) {
+    @include disableAnimation;
+  }
+}
+
 /**
  * Accessability. Black and White Mode
  */
+@mixin acModeBW {
+  filter: grayscale(100%);
+}
+
 /**
  * Accessability. Inverse Mode
  */
+@mixin acModeContrast {
+  filter: invert(100%);
+  background-color: $white !important;
+}
+
 /**
  * Meter reset
  */
+@mixin meterReset {
+  meter {
+    background: none;
+    -webkit-appearance: none;
+  }
+
+  ::-moz-meter-bar {
+    -moz-appearance: none
+  }
+
+  :-moz-meter-optimum::-moz-meter-bar,
+  :-moz-meter-sub-optimum::-moz-meter-bar,
+  :-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: none
+  }
+
+
+  meter::-webkit-meter-bar,
+  meter::-webkit-meter-optimum-value,
+  meter::-webkit-meter-suboptimum-value,
+  meter::-webkit-meter-even-less-good-value,
+  meter::-webkit-meter-inner-element {
+    background: none;
+  }
+}
+
+@mixin progressReset {
+
+  /**
+   * Progress Bar Reset
+   *
+   */
+  progress,
+  progress[role] {
+    display: block;
+
+    overflow: hidden;
+
+    width: 100%;
+    height: 40px;
+    margin: 0;
+
+    /* Reset Defaults */
+    appearance: none;
+    border: none;
+
+    /* Needs to be in here for Safari polyfill so background images work as expected. */
+    background-size: auto;
+  }
+
+  /* Polyfill */
+  progress[role]:after {
+    background-image: none;
+    /* removes default background from polyfill */
+  }
+
+  /* Ensure fallback text doesn't appear in polyfill */
+  progress[role] strong {
+    display: none;
+  }
+}
+
+
 /**
  * Modern CSS Reset Tweaks
  * ================================================== */
+
 html {
   -webkit-text-size-adjust: 100%;
-}
 
-html:focus-within {
-  scroll-behavior: smooth;
+  &:focus-within {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   text-size-adjust: 100%;
   position: relative;
+
   width: 100%;
   min-height: 100vh;
+
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeSpeed;
 }
+
 
 /* Box sizing normalization */
 *,
@@ -44,10 +143,12 @@ body {
   box-sizing: border-box;
 }
 
+
 /* Elements that don't have a class get default styles */
 a:not([class]) {
   text-decoration-skip-ink: auto;
 }
+
 
 /**
  * CSS Reset Tweaks
@@ -56,6 +157,7 @@ a:not([class]) {
  * v2.0-modified | 20110126
  * License: none (public domain)
  */
+
 html,
 body,
 div,
@@ -174,13 +276,12 @@ ul {
 blockquote,
 q {
   quotes: none;
-}
 
-blockquote:before, blockquote:after,
-q:before,
-q:after {
-  content: '';
-  content: none;
+  &:before,
+  &:after {
+    content: '';
+    content: none;
+  }
 }
 
 /**
@@ -220,8 +321,10 @@ textarea {
   resize: vertical;
 }
 
-input:focus {
-  outline: none;
+input {
+  &:focus {
+    outline: none;
+  }
 }
 
 /**
@@ -238,6 +341,7 @@ video {
  * Prevent modern browsers from displaying `audio` without controls.
  * Remove excess height in iOS 5 devices.
  */
+
 audio:not([controls]) {
   display: none;
   height: 0;
@@ -246,6 +350,7 @@ audio:not([controls]) {
 /**
  * Address styling not present in IE 7/8/9, Firefox 3, and Safari 4.
  */
+
 [hidden] {
   display: none;
 }
@@ -275,6 +380,7 @@ picture {
  * Address Firefox 3+ setting `line-height` on `input` using `!important` in
  * the UA stylesheet.
  */
+
 button,
 input {
   line-height: normal;
@@ -286,6 +392,7 @@ input {
  * Correct `button` style inheritance in Chrome, Safari 5+, and IE 6+.
  * Correct `select` style inheritance in Firefox 4+ and Opera.
  */
+
 button,
 select {
   text-transform: none;
@@ -304,6 +411,7 @@ input[type="submit"] {
 /**
  * Re-set default cursor for disabled elements.
  */
+
 button[disabled],
 html input[disabled] {
   cursor: default;
@@ -326,6 +434,7 @@ input[type="radio"] {
  * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
  *    (include `-moz` to future-proof).
  */
+
 input[type="search"] {
   -webkit-appearance: textfield;
   -moz-box-sizing: content-box;
@@ -337,6 +446,7 @@ input[type="search"] {
  * Remove inner padding and search cancel button in Safari 5 and Chrome
  * on OS X.
  */
+
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
@@ -345,6 +455,7 @@ input[type="search"]::-webkit-search-decoration {
 /**
  * Remove inner padding and border in Firefox 3+.
  */
+
 button::-moz-focus-inner,
 input::-moz-focus-inner {
   border: 0;
@@ -370,6 +481,7 @@ table {
   border-spacing: 0;
   text-indent: 0;
 }
+
 
 /**
  * Based on normalize.css v8.0.1
@@ -476,6 +588,7 @@ input {
  * Remove the inheritance of text transform in Edge, Firefox, and IE.
  * 1. Remove the inheritance of text transform in Firefox.
  */
+
 button,
 select {
   /* 1 */
@@ -485,6 +598,7 @@ select {
 /**
  * Correct the inability to style clickable types in iOS and Safari.
  */
+
 button,
 [type="button"],
 [type="reset"],
@@ -495,6 +609,7 @@ button,
 /**
  * Remove the inner border and padding in Firefox.
  */
+
 button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,
 [type="reset"]::-moz-focus-inner,
@@ -504,9 +619,11 @@ button::-moz-focus-inner,
   outline: 0;
 }
 
+
 legend {
   color: inherit;
   white-space: normal;
+
   display: block;
   border: 0;
   max-width: 100%;
@@ -521,12 +638,14 @@ body:not(:-moz-handler-blocked) fieldset {
   display: block;
 }
 
+
 /**
  * Add the correct vertical alignment in Chrome, Firefox, and Opera.
  */
 progress {
   vertical-align: baseline;
 }
+
 
 /**
  * Correct the cursor style of increment and decrement buttons in Chrome.
@@ -535,6 +654,7 @@ progress {
 [type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
+
 
 /**
  * 1. Correct the odd appearance in Chrome and Safari.
@@ -567,6 +687,7 @@ progress {
 
 /* Interactive
    ========================================================================== */
+
 /*
  * Add the correct display in all browsers.
  */
@@ -577,11 +698,10 @@ summary {
 /*
  * Misc
  * ========================================================================== */
+
 /**
  * Add the correct display in IE 10+.
  */
 template {
   display: none;
 }
-
-/*# sourceMappingURL=reset.css.map */

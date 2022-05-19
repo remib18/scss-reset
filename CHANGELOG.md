@@ -1,10 +1,12 @@
 # Changelog
 
-## [1.2.3] — 2022-05-12
+## [1.2.3] — 2022-05-19
 
 - Updated scss with modern syntax of `@use` and `@forward` instead of `@import`
 - Global cleanup of duplicatas
-- Setup basic scripts to simplify future updates
+- Updating Gulpfile
+- Adding dev dependency to easily maintain project
+- Now everything you want to import is located in the dist folder (appart the shopify part)
 
 ## [1.2.2] - 2021-09-12
 

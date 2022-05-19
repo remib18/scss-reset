@@ -8,7 +8,7 @@
    */
 
   // Styles
-  const sass = require("gulp-sass");
+  const sass = require("gulp-sass")(require("sass"));
   const postcss = require("gulp-postcss");
   const autoprefixer = require("autoprefixer");
   const cssnano = require("cssnano");
@@ -35,19 +35,19 @@
   const cfg = {
     src: {
       scss: "./src/scss/**/*.scss",
-      css: "./src/css/**/*.css",
       html: "./test/*.html",
     },
     server: {
-      host: "0.0.0.0",
+      host: "0" +
+        "127.0.0.1",
       root: "./test/",
       port: 5500,
       src: "./test/index.html",
       uri: "http://localhost:5500/",
     },
     dest: {
-      scss: "./src/scss/",
-      css: "./src/css/",
+      scss: "./dist/",
+      css: "./dist/css/",
       cssDist: "./dist/",
       cssTest: "./test/css/",
     },
@@ -58,24 +58,24 @@
    */
   const styles = () =>
     src(cfg.src.scss)
-      .pipe(sourcemaps.init())
+      .pipe(sourcemaps.init(undefined))
       .pipe(plumber())
       .pipe(
         sass({
-          outputStyle: "expanded",
-          //outputStyle: 'compressed',
+          //outputStyle: "expanded",
+          outputStyle: 'compressed',
           errLogToConsole: false,
-        })
+        }, undefined)
       )
       .on("error", notify.onError())
-      .pipe(sourcemaps.write("./"))
+      .pipe(sourcemaps.write("./", undefined))
       .pipe(dest(cfg.dest.css))
       .pipe(connect.reload());
 
-  const stylesRenameReset = () =>
-    src("./src/scss/_reset.scss")
-      .pipe(rename("reset.scss"))
-      .pipe(dest("./src/scss"));
+  const copyScss = () =>
+    src(cfg.src.scss)
+      .pipe(plumber())
+      .pipe(dest(cfg.dest.scss))
 
   /**
    * PostCSS, Autoprefixer
@@ -83,7 +83,7 @@
   const css = () =>
     src(cfg.dest.css + "/**/*.css")
       .pipe(plumber())
-      .pipe(postcss([autoprefixer(), cssnano()]))
+      .pipe(postcss([autoprefixer(), cssnano()], undefined))
       .on("error", notify.onError())
       .pipe(dest(cfg.dest.cssDist));
 
@@ -130,8 +130,8 @@
    */
   const watcher = () => {
     watch(
-      [cfg.src.scss, "!./src/scss/reset.scss"],
-      series(stylesRenameReset, styles, css, copyCSS, copyResetCSS)
+      [cfg.src.scss],
+      series(styles, css, copyCSS)
     );
     watch(cfg.src.html, html);
   };
@@ -143,10 +143,8 @@
   const copyCSS = () =>
     src(cfg.dest.cssDist + "*").pipe(dest(cfg.dest.cssTest));
 
-  const copyResetCSS = () => src("./src/scss/_reset.scss").pipe(dest("./"));
 
-
-  const minifyResetCSS = () => src('./build/reset.css')
+  const minifyResetCSS = () => src('./dist/_reset.css')
       .pipe(cleanCSS({debug: true}, (details) => {
         console.log(`${details.name}: ${details.stats.originalSize}`);
         console.log(`${details.name}: ${details.stats.minifiedSize}`);
@@ -160,19 +158,17 @@
 
   // Development Tasks
   exports.default = parallel(
-    series(stylesRenameReset, styles, css, copyCSS, copyResetCSS, minifyResetCSS),
+    series(styles, css, copyCSS, copyScss),
     openServer,
     openBrowser,
     watcher
   );
 
   exports.build = series(
-    stylesRenameReset,
     styles,
     css,
     copyCSS,
-    copyResetCSS,
-    minifyResetCSS,
+    copyScss,
     bumper
   );
 })();
